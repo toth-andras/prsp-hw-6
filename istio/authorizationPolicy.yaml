@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-muffin-order
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: muffin-currency
+  rules:
+  - from:
+    - source:
+        principals:
+        - "cluster.local/ns/default/sa/muffin-order"

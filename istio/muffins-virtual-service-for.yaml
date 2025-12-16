@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: virtual-service-for-muffins
+  namespace: default
+spec:
+  hosts:
+  - muffin-currency.default.svc.cluster.local
+  http:
+  - name: "basic"
+    match:
+    - uri:
+        prefix: "/rate"
+    route:
+    - destination:
+        host: muffin-currency.default.svc.cluster.local
+        port:
+          number: 8083
+    retries:
+      attempts: 3
+      perTryTimeout: 2s

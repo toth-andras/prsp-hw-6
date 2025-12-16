@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: destination-rules-for-muffins
+  namespace: default
+spec:
+  host: muffin-currency.default.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    connectionPool:
+      tcp:
+        maxConnections: 10
+        connectTimeout: 5s
+      http:
+        http1MaxPendingRequests: 3
+        maxRequestsPerConnection: 5
+        maxRetries: 5
+    outlierDetection:
+      consecutive5xxErrors: 1
+      interval: 1s
+      baseEjectionTime: 3m
+      maxEjectionPercent: 100
